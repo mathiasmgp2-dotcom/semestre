@@ -446,7 +446,7 @@ function buildFaltas() {
         <div class="ftop">
           <div class="finfo">
             <div class="lim">Limite: ${s.maxF} faltas</div>
-            <div class="rem" style="color:${bc}">${remain===0?'⛔ Limite atingido!':remain+` restante${remain!==1?'s':''}`}</div>
+            <div class="rem" id="rem-${s.id}" style="color:${bc}">${remain===0?'⛔ Limite atingido!':remain+` restante${remain!==1?'s':''}`}</div>
           </div>
           <div class="ctr">
             <button class="cbtn m" onclick="changeAbs('${s.id}',-1)">−</button>
@@ -465,8 +465,10 @@ function changeAbs(id,delta) {
   state.faltas[id]=Math.max(0,(state.faltas[id]||0)+delta); save();
   const f=state.faltas[id]; const pct=Math.min(f/s.maxF,1);
   const bc=absColor(f,s.maxF); const nc=absClass(f,s.maxF);
+  const remain=Math.max(s.maxF-f,0);
   const el=document.getElementById('cn-'+id); if(el){el.textContent=f;el.className='cnum '+nc;}
   const bf=document.getElementById('bf-'+id); if(bf){bf.style.width=(pct*100)+'%';bf.style.background=bc;}
+  const rm=document.getElementById('rem-'+id); if(rm){rm.style.color=bc;rm.textContent=remain===0?'⛔ Limite atingido!':remain+` restante${remain!==1?'s':''}`;}
   if(navigator.vibrate) navigator.vibrate(12);
   refreshConceito(id);
   buildHome();
