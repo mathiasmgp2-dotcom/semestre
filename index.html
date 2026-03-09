@@ -5,8 +5,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Semestre">
-<title>Semestre</title>
+<meta name="apple-mobile-web-app-title" content="RI UFRGS">
+<title>RI UFRGS</title>
+<link id="apple-touch-icon" rel="apple-touch-icon">
+<script>
+(function(){
+  const c=document.createElement('canvas');
+  c.width=512;c.height=512;
+  const ctx=c.getContext('2d');
+
+  // Background
+  const bg=ctx.createLinearGradient(0,0,512,512);
+  bg.addColorStop(0,'#0f1f3d');
+  bg.addColorStop(1,'#1a3a6b');
+  ctx.fillStyle=bg;
+  roundRect(ctx,0,0,512,512,90);
+  ctx.fill();
+
+  // Globe circle
+  ctx.strokeStyle='rgba(255,255,255,0.18)';
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(256,256,148,0,Math.PI*2);ctx.stroke();
+
+  // Latitude lines
+  [-90,-50,0,50,90].forEach(lat=>{
+    const y=256+lat*1.48;
+    const hw=Math.sqrt(Math.max(0,148*148-(y-256)*(y-256)));
+    if(hw>4){ctx.beginPath();ctx.ellipse(256,y,hw,hw*0.22,0,0,Math.PI*2);ctx.stroke();}
+  });
+
+  // Longitude lines
+  for(let i=0;i<4;i++){
+    ctx.beginPath();
+    ctx.ellipse(256,256,148*Math.abs(Math.cos(i*Math.PI/4)),148,i*Math.PI/4,0,Math.PI*2);
+    ctx.stroke();
+  }
+
+  // Globe solid stroke
+  ctx.strokeStyle='rgba(255,255,255,0.55)';
+  ctx.lineWidth=3.5;
+  ctx.beginPath();ctx.arc(256,256,148,0,Math.PI*2);ctx.stroke();
+
+  // Graduation cap - hat board
+  ctx.fillStyle='#ffffff';
+  ctx.save();
+  ctx.translate(256,195);
+  // diamond shape
+  ctx.beginPath();
+  ctx.moveTo(0,-40);ctx.lineTo(70,0);ctx.lineTo(0,40);ctx.lineTo(-70,0);
+  ctx.closePath();ctx.fill();
+
+  // cap top shadow
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  ctx.moveTo(0,0);ctx.lineTo(70,0);ctx.lineTo(0,40);ctx.lineTo(-70,0);
+  ctx.closePath();ctx.fill();
+
+  // cap stem
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(-8,38,16,36);
+  // base
+  ctx.beginPath();ctx.arc(0,80,14,0,Math.PI*2);ctx.fill();
+
+  ctx.restore();
+
+  // Tassel cord
+  ctx.strokeStyle='rgba(255,220,80,0.9)';
+  ctx.lineWidth=4;
+  ctx.beginPath();ctx.moveTo(326,195);ctx.quadraticCurveTo(360,210,355,250);ctx.stroke();
+  ctx.fillStyle='rgba(255,220,80,0.9)';
+  ctx.beginPath();ctx.arc(355,258,9,0,Math.PI*2);ctx.fill();
+
+  // Set icon
+  const link=document.getElementById('apple-touch-icon');
+  link.href=c.toDataURL('image/png');
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+    ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
+    ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
+    ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
+    ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+  }
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
